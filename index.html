@@ -136,7 +136,7 @@ src="https://www.facebook.com/tr?id=1371493691301166&ev=PageView&noscript=1"
   </div>
 
   <a href="https://t.me/+0UeS95qTMhtiYjI1" class="btn" id="ctaBtn">
-    🚀 JOIN for FREE LEARNING (ફ્રી જુઓ)
+    🚀 JOIN FREE TELEGRAM (ફ્રી જુઓ)
   </a>
   <div class="fallback-link" id="fallbackLink">
     Redirect na hua? <a href="https://t.me/+0UeS95qTMhtiYjI1">Yaha tap karo</a>
@@ -222,10 +222,27 @@ function isLikelyRealUser(){
   if (!hasScrolled && !hasMouseMoved) return false;
   return true;
 }
-function isProbablyBot(){
+
+// TIER 1 — HARD BLOCK: in signals ke saath, redirect hi nahi hota, Telegram
+// tak pahunchne hi nahi diya jaata. Sirf high-confidence bot signals yahan
+// rakhe hain (false-positive risk kam) taaki genuine users kabhi block na ho.
+function isDefinitelyBot(clickDelayMs){
   if (navigator.webdriver) return true;
   if (/bot|crawl|spider|slurp|headless/i.test(navigator.userAgent)) return true;
+  // Headless Chrome quirk: 'Chrome' UA mein hone ke bawajood window.chrome missing
+  if (/Chrome/.test(navigator.userAgent) && !window.chrome) return true;
+  // Genuine plugins usually 0 nahi hote desktop Chrome/Firefox mein (mobile Safari alag hai)
+  if (navigator.plugins && navigator.plugins.length === 0 && !/Mobi|Android|iPhone/i.test(navigator.userAgent)) return true;
+  // Insaan ke liye page load hote hi 400ms ke andar click karke button padhna+tap
+  // karna practically impossible hai — ye near-certain automation hai
+  if (clickDelayMs < 400) return true;
   return false;
+}
+
+// TIER 2 — DOWNGRADE ONLY: redirect hota hai (genuine-but-uncertain users
+// lose nahi hote), bas Meta ko Lead ki jagah LowQualityClick milta hai
+function isLowQualitySignal(){
+  return !isLikelyRealUser();
 }
 
 if (fallbackLink) {
@@ -236,20 +253,22 @@ if (fallbackLink) {
 ctaBtn.addEventListener('click', function(e){
   e.preventDefault();
   const destination = this.href;
+  const clickDelayMs = Date.now() - pageLoadTime;
 
-  // Sirf real user-generated click allow karta hai, scripted click nahi
-  if (!e.isTrusted){ window.location.href = destination; return; }
+  // Non-trusted (scripted) click — na redirect, na tracking
+  if (!e.isTrusted) return;
 
   if (LeadFired){ window.location.href = destination; return; }
   LeadFired = true;
 
-  if (isProbablyBot()){ window.location.href = destination; return; }
+  // === HARD GATE: bot confirm hua to Telegram tak bhejte hi nahi ===
+  if (isDefinitelyBot(clickDelayMs)) return;
 
   const eventId = 'Lead_' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
   const alreadyFiredThisDevice = hasFiredBefore();
 
   if (typeof fbq === 'function'){
-    if (isLikelyRealUser() && !alreadyFiredThisDevice){
+    if (!isLowQualitySignal() && !alreadyFiredThisDevice){
       fbq('track', 'Lead', {
         content_name: 'Gujarati Trader Channel',
         content_category: 'Stock Market Education'
@@ -261,7 +280,8 @@ ctaBtn.addEventListener('click', function(e){
   }
 
   // 200ms delay — mobile/in-app browser mein turant navigation se pixel
-  // beacon cancel ho sakta hai, isse fix hota hai
+  // beacon cancel ho sakta hai, isse fix hota hai. Genuine user ke liye
+  // ye imperceptible hai — speed pe koi asar nahi.
   setTimeout(function(){ window.location.href = destination; }, 200);
 
   // Safety net — agar redirect fail ho to manual link dikha do
