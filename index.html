@@ -56,7 +56,7 @@ h1{ font-family:'Poppins',sans-serif; font-size:23px; font-weight:800; letter-sp
 .sub{ color:var(--gold-2); font-size:13px; font-weight:600; margin-top:5px; font-family:'Poppins',sans-serif; }
 .desc{ color:var(--muted); font-size:13px; margin-top:10px; line-height:1.55; }
 
-/* === Stats — each mapped to its own accent, not decorative === */
+/* === Stats === */
 .stats{ display:flex; gap:10px; margin:18px 0; }
 .box{ flex:1; background:var(--bg-card); border:1px solid var(--border); padding:13px 8px; border-radius:14px; text-align:center; border-top:2px solid var(--accent, var(--gold-1)); }
 .box.b1{ --accent:var(--gold-1); }
@@ -196,6 +196,11 @@ const ctaBtn = document.getElementById('ctaBtn');
 const fallbackLink = document.getElementById('fallbackLink');
 let LeadFired = false;
 
+// DEBUG MODE — set to true temporarily to see exactly which signal is
+// tripping in the console when you test-click from a real Facebook ad.
+// Set back to false once you've confirmed real users are getting through.
+const DEBUG = true;
+
 // Cross-session dedupe — same device/browser ko dobara Lead na mile
 const STORAGE_KEY = 'fbLeadFired_1539397147386582';
 function hasFiredBefore(){ try{ return localStorage.getItem(STORAGE_KEY) === '1'; }catch(e){ return false; } }
@@ -218,31 +223,37 @@ document.addEventListener('touchstart', () => { hasMouseMoved = true; }, { once:
 
 function isLikelyRealUser(){
   const timeOnPage = Date.now() - pageLoadTime;
-  if (timeOnPage < 1200) return false;
+  if (timeOnPage < 800) return false; // was 1200ms — too strict for eager tappers
   if (!hasScrolled && !hasMouseMoved) return false;
   return true;
 }
 
-// TIER 1 — HARD BLOCK: in signals ke saath, redirect hi nahi hota, Telegram
-// tak pahunchne hi nahi diya jaata. Sirf high-confidence bot signals yahan
-// rakhe hain (false-positive risk kam) taaki genuine users kabhi block na ho.
+// TIER 1 — HARD BLOCK: redirect is skipped entirely. Kept to ONLY the
+// signals with near-zero false-positive risk across real mobile browsers
+// and Facebook's in-app webview. Previously this tier also blocked on
+// "Chrome UA without window.chrome" and "0 plugins on non-mobile-matching
+// UA" — both of those fire on real traffic (Facebook's Android in-app
+// browser commonly lacks window.chrome even on genuine Chrome-based
+// engines, and iPadOS 13+ reports a desktop-style UA that fails the mobile
+// regex even though the device has 0 plugins like any modern browser).
+// That was almost certainly blocking real ad clicks from ever reaching
+// Telegram. Those two checks now only feed the soft LowQualityClick tier.
 function isDefinitelyBot(clickDelayMs){
   if (navigator.webdriver) return true;
   if (/bot|crawl|spider|slurp|headless/i.test(navigator.userAgent)) return true;
-  // Headless Chrome quirk: 'Chrome' UA mein hone ke bawajood window.chrome missing
-  if (/Chrome/.test(navigator.userAgent) && !window.chrome) return true;
-  // Genuine plugins usually 0 nahi hote desktop Chrome/Firefox mein (mobile Safari alag hai)
-  if (navigator.plugins && navigator.plugins.length === 0 && !/Mobi|Android|iPhone/i.test(navigator.userAgent)) return true;
-  // Insaan ke liye page load hote hi 400ms ke andar click karke button padhna+tap
-  // karna practically impossible hai — ye near-certain automation hai
-  if (clickDelayMs < 400) return true;
+  // Only treat an extremely fast click as automation — real taps on a
+  // page that's already rendered can legitimately happen in under 400ms.
+  if (clickDelayMs < 250) return true;
   return false;
 }
 
-// TIER 2 — DOWNGRADE ONLY: redirect hota hai (genuine-but-uncertain users
-// lose nahi hote), bas Meta ko Lead ki jagah LowQualityClick milta hai
+// TIER 2 — DOWNGRADE ONLY: redirect still happens, Meta gets
+// LowQualityClick instead of Lead. This is where the demoted checks live.
 function isLowQualitySignal(){
-  return !isLikelyRealUser();
+  const suspiciousChrome = /Chrome/.test(navigator.userAgent) && !window.chrome;
+  const suspiciousPlugins = navigator.plugins && navigator.plugins.length === 0
+    && !/Mobi|Android|iPhone|iPad|Macintosh/i.test(navigator.userAgent);
+  return !isLikelyRealUser() || suspiciousChrome || suspiciousPlugins;
 }
 
 if (fallbackLink) {
@@ -255,14 +266,29 @@ ctaBtn.addEventListener('click', function(e){
   const destination = this.href;
   const clickDelayMs = Date.now() - pageLoadTime;
 
+  if (DEBUG){
+    console.log('[click debug]', {
+      clickDelayMs,
+      webdriver: navigator.webdriver,
+      windowChrome: !!window.chrome,
+      pluginsLength: navigator.plugins ? navigator.plugins.length : 'n/a',
+      userAgent: navigator.userAgent,
+      hasScrolled, hasMouseMoved,
+      isTrusted: e.isTrusted
+    });
+  }
+
   // Non-trusted (scripted) click — na redirect, na tracking
   if (!e.isTrusted) return;
 
   if (LeadFired){ window.location.href = destination; return; }
   LeadFired = true;
 
-  // === HARD GATE: bot confirm hua to Telegram tak bhejte hi nahi ===
-  if (isDefinitelyBot(clickDelayMs)) return;
+  // === HARD GATE: only fires on near-certain automation now ===
+  if (isDefinitelyBot(clickDelayMs)){
+    if (DEBUG) console.log('[click debug] BLOCKED by hard gate');
+    return;
+  }
 
   const eventId = 'Lead_' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
   const alreadyFiredThisDevice = hasFiredBefore();
