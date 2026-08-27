@@ -249,7 +249,7 @@ src="https://www.facebook.com/tr?id=1371493691301166&ev=PageView&noscript=1"
   telegramBtn.addEventListener("click", function(e) {
     e.preventDefault();
     if (window.fbq) {
-      fbq('track', 'Subscribe', { content_name: 'Telegram Community', button_click: true }, { eventID: 'telegram_subscribe_' + Date.now() });
+      fbq('track', 'Lead', { content_name: 'Telegram Community', button_click: true }, { eventID: 'telegram_lead_' + Date.now() });
     }
     setTimeout(() => {
       window.location.href = telegramLink;
