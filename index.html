@@ -2,97 +2,177 @@
 <html lang="gu">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TRADING EXPERT - Gujarati Community</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="Join Gujarati Trader — free stock market education community on Telegram.">
+<title>GUJARATI TRADER | Official Community</title>
 
-<meta property="og:title" content="Stock Market Analysis - Gujarati Trader">
-<meta property="og:description" content="Daily Market Updates & Educational Content in Gujarati">
-<meta property="og:type" content="website">
-
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@400;600;700&family=Poppins:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
 
 <style>
-:root{
-  --bg:#0d1321;
-  --bg-card:#161d31;
-  --border:#2a3352;
-  --gold-1:#FF9F1C;
-  --gold-2:#FFD166;
-  --up:#00D68F;
-  --down:#FF5470;
-  --text:#F5F3EE;
-  --muted:#8b93ac;
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+/* Premium glass-panel layout, mobile-first */
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 22px 18px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #f0fdfa;
+  background:
+    radial-gradient(circle at 15% 8%, rgba(255, 153, 51, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 85% 92%, rgba(13, 148, 136, 0.15) 0%, transparent 45%),
+    #241408;
 }
-*{ margin:0; padding:0; box-sizing:border-box; }
-body{ background:var(--bg); color:var(--text); font-family:'Noto Sans Gujarati','Poppins',sans-serif; }
 
-@media (prefers-reduced-motion: reduce){
-  *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; }
+.wrapper { width: 100%; max-width: 420px; }
+
+/* Glass card with layered borders for a premium feel */
+.card {
+  position: relative;
+  background: linear-gradient(160deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+  backdrop-filter: blur(0px);
+  border: 1px solid rgba(255, 153, 51, 0.22);
+  border-radius: 24px;
+  padding: 28px 22px 24px;
+  text-align: center;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.06);
+}
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 20px; right: 20px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212,175,55,0.6), transparent);
 }
 
-/* === Ticker (signature element) === */
-.ticker-wrap{ background:#0a0e18; border-bottom:1px solid var(--border); overflow:hidden; padding:9px 0; }
-.ticker{ display:flex; gap:26px; width:max-content; animation:scrollTicker 22s linear infinite; }
-.tick{ display:flex; align-items:center; gap:6px; font-family:'Poppins',sans-serif; font-size:12px; font-weight:600; color:var(--muted); white-space:nowrap; }
-.tick b{ color:var(--text); font-weight:700; }
-.tick.up{ color:var(--up); }
-.tick.down{ color:var(--down); }
-@keyframes scrollTicker{ from{ transform:translateX(0);} to{ transform:translateX(-50%);} }
-
-.container{ max-width:440px; margin:0 auto; padding:20px; }
-
-/* === Profile Card === */
-.profile-card{ position:relative; text-align:center; background:linear-gradient(180deg, var(--bg-card) 0%, #0f1526 100%); padding:28px 15px 22px; border-radius:22px; border:1px solid var(--border); margin-bottom:18px; overflow:hidden; }
-.profile-card::before{
-  content:''; position:absolute; top:-60%; left:50%; width:220px; height:220px;
-  background:radial-gradient(circle, rgba(255,159,28,0.18) 0%, transparent 70%);
-  transform:translateX(-50%); pointer-events:none;
+/* Ringed avatar - gold/teal duotone ring */
+.avatar-ring {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  padding: 3px;
+  background: conic-gradient(from 180deg, #FF9933, #0D9488, #FF9933);
 }
-.img-box{ position:relative; width:108px; height:108px; margin:0 auto 16px auto; border-radius:50%; padding:3px; background:linear-gradient(135deg, var(--gold-1), var(--gold-2)); box-shadow:0 0 24px rgba(255,159,28,0.35); }
-.img-box .inner{ width:100%; height:100%; border-radius:50%; overflow:hidden; background:#111; }
-.img-box img{ width:100%; height:100%; object-fit:cover; display:block; }
-
-h1{ font-family:'Poppins',sans-serif; font-size:23px; font-weight:800; letter-spacing:0.5px; color:var(--text); }
-.sub{ color:var(--gold-2); font-size:13px; font-weight:600; margin-top:5px; font-family:'Poppins',sans-serif; }
-.desc{ color:var(--muted); font-size:13px; margin-top:10px; line-height:1.55; }
-
-/* === Stats === */
-.stats{ display:flex; gap:10px; margin:18px 0; }
-.box{ flex:1; background:var(--bg-card); border:1px solid var(--border); padding:13px 8px; border-radius:14px; text-align:center; border-top:2px solid var(--accent, var(--gold-1)); }
-.box.b1{ --accent:var(--gold-1); }
-.box.b2{ --accent:var(--up); }
-.box.b3{ --accent:var(--down); }
-.box h2{ font-family:'Poppins',sans-serif; color:var(--accent); font-size:19px; font-weight:800; }
-.box p{ font-size:11px; color:var(--muted); margin-top:3px; }
-
-/* === CTA === */
-.btn{ position:relative; display:flex; align-items:center; justify-content:center; gap:8px; width:100%; margin:22px 0 8px; padding:17px; background:linear-gradient(90deg, var(--gold-1) 0%, var(--gold-2) 100%); color:#1a1200; text-align:center; text-decoration:none; border-radius:14px; font-weight:800; font-size:16px; font-family:'Poppins',sans-serif; border:none; cursor:pointer; box-shadow:0 8px 26px rgba(255,159,28,0.32); overflow:hidden; transition:transform 0.15s; }
-.btn:active{ transform:scale(0.97); }
-.btn::after{
-  content:''; position:absolute; top:0; left:-60%; width:40%; height:100%;
-  background:linear-gradient(120deg, transparent, rgba(255,255,255,0.55), transparent);
-  animation:shimmer 2.8s ease-in-out infinite;
+.avatar-ring .inner {
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  padding: 3px;
+  background: #241408;
 }
-@keyframes shimmer{ 0%{ left:-60%;} 55%{ left:120%;} 100%{ left:120%;} }
+.avatar-ring img {
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  background: #0a201c;
+}
 
-.fallback-link{ display:none; text-align:center; font-size:12px; color:var(--muted); margin-bottom:10px; }
-.fallback-link.show{ display:block; }
-.fallback-link a{ color:var(--gold-2); text-decoration:underline; }
+.eyebrow {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #FF9933;
+  margin-bottom: 6px;
+}
+h1 {
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.3px;
+  color: #ffffff;
+  margin-bottom: 5px;
+}
+.subtitle { font-size: 12.5px; color: #f0c99a; margin-bottom: 20px; }
 
-/* === Points === */
-.points{ margin-top:14px; }
-.point{ background:var(--bg-card); border:1px solid var(--border); padding:14px; border-radius:12px; margin-bottom:10px; font-size:13px; color:#e2e8f0; display:flex; gap:12px; align-items:center; }
-.icon{ font-size:18px; }
+/* Premium divider-stat row with vertical rules */
+.stat-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 22px;
+  padding: 14px 0;
+  border-top: 1px solid rgba(255, 153, 51, 0.15);
+  border-bottom: 1px solid rgba(255, 153, 51, 0.15);
+}
+.stat-row .s { flex: 1; text-align: center; }
+.stat-row .s strong { display: block; font-size: 16px; font-weight: 900; color: #FF9933; }
+.stat-row .s span { font-size: 9.5px; color: #9adecc; }
+.stat-row .divider { width: 1px; height: 28px; background: rgba(255, 153, 51, 0.2); }
 
-/* === Legal === */
-.legal{ margin-top:28px; font-size:11px; color:var(--muted); line-height:1.6; text-align:center; border-top:1px solid var(--border); padding-top:20px; }
-.legal a{ color:var(--muted); text-decoration:underline; }
-.tabs{ display:flex; justify-content:center; gap:15px; margin-bottom:12px; }
-.tab{ font-size:12px; color:var(--muted); cursor:pointer; border:none; background:none; font-family:inherit; text-decoration:none; font-weight:600; }
-.tab.active{ color:var(--gold-2); border-bottom:2px solid var(--gold-2); padding-bottom:2px; }
-.info{ display:none; }
-.info.active{ display:block; }
+.checklist { display: flex; flex-direction: column; gap: 11px; text-align: left; margin-bottom: 22px; }
+.check-item { display: flex; align-items: flex-start; gap: 9px; font-size: 12.5px; color: #fbe8d0; }
+.check-item i { color: #FF9933; font-size: 12px; margin-top: 2px; flex-shrink: 0; }
+
+/* Premium CTA - dual-tone with divider seam */
+.cta-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 14px;
+  width: 100%;
+  padding: 17px 20px;
+  border-radius: 18px;
+  background: linear-gradient(90deg, #FF9933 0%, #FF9933 38%, #0088CC 38%, #0088CC 100%);
+  color: #ffffff;
+  text-decoration: none;
+  letter-spacing: 0.2px;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+  border: 1px solid rgba(255,255,255,0.15);
+  transition: transform 0.15s ease, filter 0.2s ease;
+  cursor: pointer;
+  margin-bottom: 4px;
+  overflow: hidden;
+  min-height: 64px;
+}
+.cta-btn::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%);
+  pointer-events: none;
+}
+.cta-btn:active { transform: scale(0.97); }
+.cta-btn:hover { filter: brightness(1.06); }
+
+.cta-icon-badge {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #0A0805;
+}
+.cta-icon-badge i { font-size: 18px; }
+
+.cta-text-wrap { position: relative; text-align: left; }
+.cta-text-wrap .main-txt { display: block; font-size: 14.5px; font-weight: 900; line-height: 1.25; color: #0A0805; }
+.cta-text-wrap .sub-txt { display: block; font-size: 10px; font-weight: 600; color: rgba(10,8,5,0.65); margin-top: 2px; }
+
+.disclaimer {
+  margin-top: 18px;
+  font-size: 9.5px;
+  line-height: 1.65;
+  color: #1a4a40;
+  text-align: center;
+  padding: 14px 4px 0;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
 </style>
+
+</head>
+<body>
 
 <!-- Meta Pixel Code -->
 <script>
@@ -111,208 +191,71 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=1371493691301166&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
-</head>
-<body>
 
-<div class="ticker-wrap">
-  <div class="ticker" id="tickerStrip"></div>
-</div>
+<div class="wrapper">
+  <div class="card">
 
-<div class="container">
+    <div class="avatar-ring">
+      <div class="inner">
+        <img src="GJ.jpg" alt="Profile Image" width="96" height="96" decoding="async" fetchpriority="high">
+      </div>
+    </div>
 
-  <div class="profile-card">
-    <div class="img-box"><div class="inner">
-      <img src="gj.jpg" alt="Pro Trading Expert">
-    </div></div>
+    <div class="eyebrow">Verified Educational Community</div>
     <h1>GUJARATI TRADER</h1>
-    <p class="sub">Market Analyst & Educator</p>
-    <p class="desc">સ્ટોક માર્કેટ શીખો સરળ ગુજરાતી ભાષામાં. સ્ટોક માર્કેટના ડેઇલી અપડેટ્સ માટે જોડાઓ.</p>
-  </div>
+    <p class="subtitle">શેર બજાર &amp; Financial Trading Education</p>
 
-  <div class="stats">
-    <div class="box b1"><h2>6+</h2><p>વર્ષનો અનુભવ</p></div>
-    <div class="box b2"><h2>10K+</h2><p>સભ્યો</p></div>
-    <div class="box b3"><h2>Daily</h2><p>લાઇવ અપડેટ્સ</p></div>
-  </div>
-
-  <a href="https://t.me/+0UeS95qTMhtiYjI1" class="btn" id="ctaBtn">
-    🚀 JOIN FREE TELEGRAM (ફ્રી જુઓ)
-  </a>
-  <div class="fallback-link" id="fallbackLink">
-    Redirect na hua? <a href="https://t.me/+0UeS95qTMhtiYjI1">Yaha tap karo</a>
-  </div>
-
-  <div class="points">
-    <div class="point"><span class="icon">📊</span><span><strong>ડેઇલી ઇન્ટ્રાડે એનાલિસિસ:</strong> Daily Intraday Levels</span></div>
-    <div class="point"><span class="icon">📈</span><span><strong>નિફ્ટી અને બેંકનિફ્ટી:</strong> Nifty & BankNifty Setup</span></div>
-    <div class="point"><span class="icon">📚</span><span><strong>ફ્રી લર્નિંગ કન્ટેન્ટ:</strong> Educational Trading Content</span></div>
-  </div>
-
-  <div class="legal">
-    <div class="tabs">
-      <button class="tab active" onclick="showTab('p', this)">Privacy Policy</button>
-      <button class="tab" onclick="showTab('d', this)">Disclaimer</button>
-      <button class="tab" onclick="showTab('t', this)">Terms</button>
+    <div class="stat-row">
+      <div class="s"><strong>100%</strong><span>શરૂઆત</span></div>
+      <div class="divider"></div>
+      <div class="s"><strong>દરરોજ</strong><span>Updates</span></div>
+      <div class="divider"></div>
+      <div class="s"><strong>મફત</strong><span>Access</span></div>
     </div>
-    <div class="info active" id="p">
-      અમે એનાલિટિક્સ માટે Meta Pixel નો ઉપયોગ કરીએ છીએ. અમે કોઈ અંગત નાણાકીય માહિતી એકત્રિત કરતા નથી.<br>
-      Ads by <a href="https://t.me/srsagency">SRS Ads</a>
-    </div>
-    <div class="info" id="d">
-      <strong>ડીસ્ક્લેમર:</strong> અમે SEBI રજિસ્ટર્ડ નથી. આ પેજ માત્ર શૈક્ષણિક હેતુ (Educational Purpose) માટે છે. ટ્રેડિંગ જોખમી છે, પોતાના જોખમે વેપાર કરો.
-    </div>
-    <div class="info" id="t">
-      ભાગ લેવા માટે ઉંમર ૧૮+ હોવી જરૂરી છે. તમામ કન્ટેન્ટ માત્ર લર્નિંગ હેતુ માટે છે.
-    </div>
-  </div>
 
+    <div class="checklist">
+      <div class="check-item"><i class="fas fa-check-circle"></i> દરરોજ Market Updates અને Insights</div>
+      <div class="check-item"><i class="fas fa-check-circle"></i> મફત Educational Content</div>
+      <div class="check-item"><i class="fas fa-check-circle"></i> સરળ સમજૂતી શરૂઆત માટે</div>
+      <div class="check-item"><i class="fas fa-check-circle"></i> સંપૂર્ણ Community Support</div>
+    </div>
+
+    <a class="cta-btn" id="telegramBtn" href="https://t.me/+0UeS95qTMhtiYjI1" rel="noopener noreferrer">
+      <span class="cta-icon-badge"><i class="fab fa-telegram-plane"></i></span>
+      <span class="cta-text-wrap">
+        <span class="main-txt">Join Free Telegram Community</span>
+        <span class="sub-txt">Instant access • 100% free</span>
+      </span>
+    </a>
+
+    <div class="disclaimer">
+      <strong>Disclaimer:</strong> આ platform ફક્ત educational અને informational હેતુઓ માટે છે. અમે કોઈ financial advice આપતા નથી અને નફાની કોઈ ગેરંટી નથી. Stock market investments carry risk — રોકાણ કરતા પહેલા તમારું પોતાનું research કરો.
+    </div>
+
+    <div style="text-align:center; margin-top: 16px;">
+      <a href="https://t.me/srsagency" target="_blank" rel="noopener noreferrer" style="display:inline-block; padding:6px 14px; border-radius:20px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); color:#9adecc; font-size:10px; font-weight:600; text-decoration:none; letter-spacing:0.3px;">
+        Ads By SRS ADS
+      </a>
+    </div>
+
+  </div>
 </div>
 
 <script>
-function showTab(id, btn) {
-  document.querySelectorAll('.info').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  btn.classList.add('active');
-}
+(function() {
+  const telegramLink = "https://t.me/+0UeS95qTMhtiYjI1";
+  const telegramBtn = document.getElementById("telegramBtn");
 
-// === Ticker strip — decorative market texture, purely visual, no real data ===
-(function buildTicker(){
-  const items = [
-    { s:'NIFTY 50', v:'24,812', up:true },
-    { s:'BANKNIFTY', v:'51,340', up:false },
-    { s:'SENSEX', v:'81,205', up:true },
-    { s:'RELIANCE', v:'2,940', up:true },
-    { s:'TCS', v:'4,110', up:false },
-    { s:'HDFC BANK', v:'1,680', up:true }
-  ];
-  const strip = document.getElementById('tickerStrip');
-  const html = items.map(i => `<span class="tick ${i.up?'up':'down'}">${i.s} <b>${i.v}</b> ${i.up?'▲':'▼'}</span>`).join('');
-  strip.innerHTML = html + html; // duplicate for seamless loop
-})();
-
-// === Anti-fake-click pixel logic ===
-const ctaBtn = document.getElementById('ctaBtn');
-const fallbackLink = document.getElementById('fallbackLink');
-let LeadFired = false;
-
-// DEBUG MODE — set to true temporarily to see exactly which signal is
-// tripping in the console when you test-click from a real Facebook ad.
-// Set back to false once you've confirmed real users are getting through.
-const DEBUG = true;
-
-// Cross-session dedupe — same device/browser ko dobara Lead na mile
-const STORAGE_KEY = 'fbLeadFired_1539397147386582';
-function hasFiredBefore(){ try{ return localStorage.getItem(STORAGE_KEY) === '1'; }catch(e){ return false; } }
-function markFired(){ try{ localStorage.setItem(STORAGE_KEY, '1'); }catch(e){} }
-
-// fbclid capture — future server-side CAPI ke liye ready rakha
-(function captureFbc(){
-  try{
-    const params = new URLSearchParams(window.location.search);
-    const fbclid = params.get('fbclid');
-    if (fbclid) localStorage.setItem('_fbc_captured', 'fb.1.' + Date.now() + '.' + fbclid);
-  }catch(e){}
-})();
-
-const pageLoadTime = Date.now();
-let hasScrolled = false, hasMouseMoved = false;
-window.addEventListener('scroll', () => { hasScrolled = true; }, { once:true });
-document.addEventListener('mousemove', () => { hasMouseMoved = true; }, { once:true });
-document.addEventListener('touchstart', () => { hasMouseMoved = true; }, { once:true });
-
-function isLikelyRealUser(){
-  const timeOnPage = Date.now() - pageLoadTime;
-  if (timeOnPage < 800) return false; // was 1200ms — too strict for eager tappers
-  if (!hasScrolled && !hasMouseMoved) return false;
-  return true;
-}
-
-// TIER 1 — HARD BLOCK: redirect is skipped entirely. Kept to ONLY the
-// signals with near-zero false-positive risk across real mobile browsers
-// and Facebook's in-app webview. Previously this tier also blocked on
-// "Chrome UA without window.chrome" and "0 plugins on non-mobile-matching
-// UA" — both of those fire on real traffic (Facebook's Android in-app
-// browser commonly lacks window.chrome even on genuine Chrome-based
-// engines, and iPadOS 13+ reports a desktop-style UA that fails the mobile
-// regex even though the device has 0 plugins like any modern browser).
-// That was almost certainly blocking real ad clicks from ever reaching
-// Telegram. Those two checks now only feed the soft LowQualityClick tier.
-function isDefinitelyBot(clickDelayMs){
-  if (navigator.webdriver) return true;
-  if (/bot|crawl|spider|slurp|headless/i.test(navigator.userAgent)) return true;
-  // Only treat an extremely fast click as automation — real taps on a
-  // page that's already rendered can legitimately happen in under 400ms.
-  if (clickDelayMs < 250) return true;
-  return false;
-}
-
-// TIER 2 — DOWNGRADE ONLY: redirect still happens, Meta gets
-// LowQualityClick instead of Lead. This is where the demoted checks live.
-function isLowQualitySignal(){
-  const suspiciousChrome = /Chrome/.test(navigator.userAgent) && !window.chrome;
-  const suspiciousPlugins = navigator.plugins && navigator.plugins.length === 0
-    && !/Mobi|Android|iPhone|iPad|Macintosh/i.test(navigator.userAgent);
-  return !isLikelyRealUser() || suspiciousChrome || suspiciousPlugins;
-}
-
-if (fallbackLink) {
-  const realLink = fallbackLink.querySelector('a');
-  if (realLink) realLink.href = ctaBtn.href;
-}
-
-ctaBtn.addEventListener('click', function(e){
-  e.preventDefault();
-  const destination = this.href;
-  const clickDelayMs = Date.now() - pageLoadTime;
-
-  if (DEBUG){
-    console.log('[click debug]', {
-      clickDelayMs,
-      webdriver: navigator.webdriver,
-      windowChrome: !!window.chrome,
-      pluginsLength: navigator.plugins ? navigator.plugins.length : 'n/a',
-      userAgent: navigator.userAgent,
-      hasScrolled, hasMouseMoved,
-      isTrusted: e.isTrusted
-    });
-  }
-
-  // Non-trusted (scripted) click — na redirect, na tracking
-  if (!e.isTrusted) return;
-
-  if (LeadFired){ window.location.href = destination; return; }
-  LeadFired = true;
-
-  // === HARD GATE: only fires on near-certain automation now ===
-  if (isDefinitelyBot(clickDelayMs)){
-    if (DEBUG) console.log('[click debug] BLOCKED by hard gate');
-    return;
-  }
-
-  const eventId = 'Lead_' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
-  const alreadyFiredThisDevice = hasFiredBefore();
-
-  if (typeof fbq === 'function'){
-    if (!isLowQualitySignal() && !alreadyFiredThisDevice){
-      fbq('track', 'Lead', {
-        content_name: 'Gujarati Trader Channel',
-        content_category: 'Stock Market Education'
-      }, { eventID: eventId });
-      markFired();
-    } else {
-      fbq('trackCustom', 'LowQualityClick', { eventID: eventId });
+  telegramBtn.addEventListener("click", function(e) {
+    e.preventDefault();
+    if (window.fbq) {
+      fbq('track', 'Subscribe', { content_name: 'Telegram Community', button_click: true }, { eventID: 'telegram_subscribe_' + Date.now() });
     }
-  }
-
-  // 200ms delay — mobile/in-app browser mein turant navigation se pixel
-  // beacon cancel ho sakta hai, isse fix hota hai. Genuine user ke liye
-  // ye imperceptible hai — speed pe koi asar nahi.
-  setTimeout(function(){ window.location.href = destination; }, 200);
-
-  // Safety net — agar redirect fail ho to manual link dikha do
-  setTimeout(function(){ if (fallbackLink) fallbackLink.classList.add('show'); }, 1300);
-});
+    setTimeout(() => {
+      window.location.href = telegramLink;
+    }, 200);
+  });
+})();
 </script>
 
 </body>
